@@ -129,11 +129,14 @@ export default function StepperInput() {
           <div className="text-sm mr-4 w-24">Value</div>
           <div className="flex items-center w-36 group">
             <button 
-              className={`w-9 px-2 py-1 bg-gray-900 rounded-l-md hover:bg-gray-700 disabled:text-opacity-20 disabled:pointer-events-none`}
+              className={`w-9 px-2 py-1 relative bg-gray-900 rounded-l-md hover:bg-gray-700 disabled:pointer-events-none`}
               onClick={() => !isDecrementDisabled && handleStep(-1)}
               disabled={isDecrementDisabled}
             > 
-              −
+              <p className={isDecrementDisabled ? 'opacity-30' : ''}>-</p>
+              {isDecrementDisabled && (
+                <div className="text-xs tooltip-decrement">Value must greater than 0</div>
+              )}
             </button>
             <input
               ref={inputRef}
@@ -145,20 +148,17 @@ export default function StepperInput() {
               onBlur={handleBlur}
             />
             <button 
-              className={`w-9 px-2 py-1 bg-gray-900 rounded-r-md hover:bg-gray-700 disabled:text-opacity-20 disabled:pointer-events-none`}
+              className={`w-9 px-2 py-1 relative bg-gray-900 rounded-r-md hover:bg-gray-700 disabled:text-opacity-20 disabled:pointer-events-none`}
               onClick={() => !isIncrementDisabled && handleStep(1)}
               disabled={isIncrementDisabled}
             >
-              +
+              <p className={isIncrementDisabled ? 'opacity-30' : ''}>+</p>
+              {isIncrementDisabled && (
+                <p className="text-xs tooltip-increment">Value must smaller than 100</p>
+              )}
             </button>
           </div>
         </div>
-        {parseFloat(value) <= 0 && (
-            <p className="text-xs">Value must greater than 0</p>
-            )}
-        {unit === '%' && parseFloat(value) >= 100 && (
-            <p className="text-xs ">Value must smaller than 100</p>
-        )}
       </div>
     </div>
   );
