@@ -3,7 +3,6 @@ import { useState, useRef } from 'react';
 export default function StepperInput() {
   const [unit, setUnit] = useState('%');
   const [value, setValue] = useState('1.0');
-  const [focused, setFocused] = useState(false);
   const [lastValidValue, setLastValidValue] = useState('1.0');
   const inputRef = useRef<HTMLInputElement>(null);
   
@@ -44,7 +43,6 @@ export default function StepperInput() {
 
   //Lưu lại giá trị hợp lệ cuối cùng
   const handleFocus = () => {
-    setFocused(true);
     const numValue = parseFloat(value) || 0;
     if (numValue >= 0 && (unit !== '%' || numValue <= 100)) {
       setLastValidValue(value);
@@ -52,7 +50,6 @@ export default function StepperInput() {
   };
 
   const handleBlur = () => {
-    setFocused(false);
     const numValue = parseFloat(value) || 0;
     
     // User nhập < 0 và out focus sẽ tự động nhảy về 0
